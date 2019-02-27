@@ -3,11 +3,11 @@ Import-Module ActiveDirectory
 
 $ErrorActionPreference = "SilentlyContinue"
 
-$searchbase = "DC=STA,DC=com"
-$EntGroups = "OU=Groups,DC=STA,DC=com"
+$searchbase = "DC=EGY,DC=com"
+$EntGroups = "OU=Groups,DC=EGY,DC=com"
 $groups = Get-ADGroup -Properties Name -Filter * -searchbase $EntGroups
-$inactiveOU = "OU=DisabledComputers,DC=STA,DC=com"
-$Days = (Get-Date).AddDays(-60)
+$inactiveOU = "OU=DisabledComputers,DC=EGY,DC=com"
+$Days = (Get-Date).AddDays(-90)
 $computers = Get-ADComputer -Properties * -Filter {LastLogonDate -lt $Days} -SearchBase $searchbase
 $DisabledComps = Get-ADComputer -Properties Name,Enabled,LastLogonDate -Filter {(Enabled -eq "False" -and LastLogonDate -lt $Days)} -SearchBase $inactiveOU
 
